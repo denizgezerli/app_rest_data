@@ -12,19 +12,19 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            background-image: url("/static/roller.png"); /* Relative path to the local image file */
+            background-image: url("/static/roller.png");
             background-size: cover;
         }
         .content {
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.75); /* Background color with transparency */
-            padding: 20px; /* Add padding to the content */
-            border-radius: 10px; /* Rounded corners for the content */
+            background-color: rgba(255, 255, 255, 0.75);
+            padding: 20px;
+            border-radius: 10px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px; /* Add margin to create space between submit box and table */
+            margin-top: 20px;
         }
         th, td {
             padding: 8px;
@@ -35,16 +35,16 @@
             background-color: #f2f2f2;
         }
         input[type="submit"] {
-            background-color: orange; /* Change background color of submit button to orange */
-            color: white; /* Change text color to white */
-            padding: 10px 20px; /* Add padding for better appearance */
-            border: none; /* Remove border */
-            border-radius: 5px; /* Add rounded corners */
-            cursor: pointer; /* Change cursor on hover */
-            transition: background-color 0.3s; /* Add transition effect */
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
         input[type="submit"]:hover {
-            background-color: darkorange; /* Darken the background color on hover */
+            background-color: darkorange;
         }
     </style>
 </head>
@@ -86,7 +86,7 @@
         <h1>No Restaurants Found</h1>
         <p>You have entered an invalid postcode. Please try again with a valid postcode.</p>
         <form action="/" method="get">
-            <label for="postcode">Enter Postcode:</label>
+            <label for="postcode">Please Enter a Postcode:</label>
             <input type="text" id="postcode" name="postcode" value="CT12EH">
             <input type="submit" value="Submit">
         </form>
