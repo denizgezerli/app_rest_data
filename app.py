@@ -1,28 +1,29 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
+import yaml
 
 app = Flask(__name__)
 
-@app.route('/')
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
+
+BASE_URL = config['BASE_URL']
+headers = config['headers']
+query_params = config['query_params']
+default_postcode = config['default_postcode']
+
+@app.route('/', methods=['GET'])
 def index():
-    BASE_URL = 'https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode'
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36',
-        "Upgrade-Insecure-Requests": "1",
-        "DNT": "1",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate"
-    }
-    query_params = {
-        "limit": 10
-    }
-    response = requests.get(f"{BASE_URL}/CT12EH", headers=headers, params=query_params)
+    postcode = request.args.get('postcode', default_postcode)
+    if postcode:
+        postcode = postcode.replace(" ", "")
+    
+    response = requests.get(f"{BASE_URL}/{postcode}", headers=headers, params=query_params)
 
     if response.status_code == 200:
         data = response.json()
         restaurants = data.get('restaurants', [])
-        return render_template('index.html', restaurants=restaurants)
+        return render_template('index.html', restaurants=restaurants, postcode=postcode, default_postcode=default_postcode)
     else:
         return "Failed to retrieve data from the API."
 

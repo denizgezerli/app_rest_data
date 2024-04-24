@@ -4,19 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Information</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-image: url("/static/roller.png"); /* Relative path to the local image file */
+            background-size: cover;
+        }
+        .content {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.75); /* Background color with transparency */
+            padding: 20px; /* Add padding to the content */
+            border-radius: 10px; /* Rounded corners for the content */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Add margin to create space between submit box and table */
+        }
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="submit"] {
+            background-color: orange; /* Change background color of submit button to orange */
+            color: white; /* Change text color to white */
+            padding: 10px 20px; /* Add padding for better appearance */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Add rounded corners */
+            cursor: pointer; /* Change cursor on hover */
+            transition: background-color 0.3s; /* Add transition effect */
+        }
+        input[type="submit"]:hover {
+            background-color: darkorange; /* Darken the background color on hover */
+        }
+    </style>
 </head>
 <body>
-    <h1>Top 10 Restaurants</h1>
-    <ul>
-        {% for restaurant in restaurants %}
-        <li>{{ loop.index }}. {{ restaurant['name'] }} - 
-            {% for cuisine in restaurant['cuisines'] %}
-                {{ cuisine['name'] }}
-                {% if not loop.last %}, {% endif %}
+    <div class="content">
+        {% if restaurants %}
+        <h1>Top 10 Restaurants for the Postcode: {{ postcode }}</h1>
+        <form action="/" method="get">
+            <label for="postcode">Please Enter a Postcode:</label>
+            <input type="text" id="postcode" name="postcode" value="CT12EH">
+            <br><br>
+            <input type="submit" value="Submit">
+            <br><br>
+        </form>
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Cuisines</th>
+                <th>Rating</th>
+                <th>Address</th>
+            </tr>
+            {% for restaurant in restaurants %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ restaurant['name'] }}</td>
+                <td>
+                    {% for cuisine in restaurant['cuisines'] %}
+                        {{ cuisine['name'] }}
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ restaurant['rating']['starRating'] }}</td>
+                <td>{{ restaurant['address']['firstLine'] }}, {{ restaurant['address']['postalCode'] }}, {{ restaurant['address']['city'] }}</td>
+            </tr>
             {% endfor %}
-            - {{ restaurant['rating']['starRating'] }} - {{ restaurant['address']['firstLine'] }}, {{ restaurant['address']['postalCode'] }}, {{ restaurant['address']['city'] }}
-        </li>
-        {% endfor %}
-    </ul>
+        </table>
+        {% else %}
+        <h1>No Restaurants Found</h1>
+        <p>You have entered an invalid postcode. Please try again with a valid postcode.</p>
+        <form action="/" method="get">
+            <label for="postcode">Enter Postcode:</label>
+            <input type="text" id="postcode" name="postcode" value="CT12EH">
+            <input type="submit" value="Submit">
+        </form>
+        {% endif %}
+    </div>
 </body>
 </html>
