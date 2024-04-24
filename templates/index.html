@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Information</title>
+</head>
+<body>
+    <h1>Top 10 Restaurants</h1>
+    <ul>
+        {% for restaurant in restaurants %}
+        <li>{{ loop.index }}. {{ restaurant['name'] }} - 
+            {% for cuisine in restaurant['cuisines'] %}
+                {{ cuisine['name'] }}
+                {% if not loop.last %}, {% endif %}
+            {% endfor %}
+            - {{ restaurant['rating']['starRating'] }} - {{ restaurant['address']['firstLine'] }}, {{ restaurant['address']['postalCode'] }}, {{ restaurant['address']['city'] }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
