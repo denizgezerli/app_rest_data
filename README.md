@@ -36,3 +36,7 @@ To run the application, execute the following command: python app.py
 
 Once the application is running, open your web browser and go to http://localhost:5000 to access the web interface. 
 You can enter a postcode in the input box and click "Submit" to find restaurants in that area.
+
+7. **Possible Improvements:**
+
+Instead of parsing the restaurants data in HTML, it can be parsed in Python. That would be a nicer solution.
